@@ -1,1 +1,15 @@
-{}
+{
+  "printWidth": 100,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "importOrder": [
+    "^(^react$|(.*)react|@react|react)",
+    "^(^@mui$|@mui)",
+    "^@core/(.*)$",
+    "^@server/(.*)$",
+    "^@ui/(.*)$",
+    "^~/(.*)$",
+    "^@/(.*)$",
+    "^[./]"
+  ]
+}

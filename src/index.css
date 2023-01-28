@@ -5,6 +5,18 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  /* colors */
+  /* https://coolors.co/palette/a7d1a0-fcebdb-283963-2e3552-ffffff-2d3a64-2a468a-feb27e-839878-fa9746 */
+  --celadon: #a7d1a0ff;
+  --antique-white: #fcebdbff;
+  --space-cadet: #283963ff;
+  --space-cadet-2: #2e3552ff;
+  --white: #ffffffff;
+  --space-cadet-3: #2d3a64ff;
+  --dark-cornflower-blue: #2a468aff;
+  --macaroni-and-cheese: #feb27eff;
+  --artichoke: #839878ff;
+  --deep-saffron: #fa9746ff;
 }
 * {
   margin: 0;
