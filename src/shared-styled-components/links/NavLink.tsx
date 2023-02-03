@@ -13,8 +13,8 @@ const NavLinkStyled = ({ link, children }: NavLinkStyledProps) => {
 export default NavLinkStyled;
 
 const Link = styled(NavLink)`
-  color: var(--macaroni-and-cheese);
+  color: var(--persian-pink);
   &.active {
-    color: var(--celadon);
+    color: var(--alice-blue);
   }
 `;

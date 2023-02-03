@@ -30,7 +30,10 @@ const MorningAppThemedComponents: ThemeOptions['components'] = {
     styleOverrides: {
       root: {
         '&:focus': {
-          color: colors.celadon,
+          color: colors.aliceBlue,
+        },
+        '&:hover': {
+          backgroundColor: colors.deepPurple,
         },
       },
     },
@@ -65,7 +68,7 @@ const MorningAppThemedComponents: ThemeOptions['components'] = {
   MuiInputLabel: {
     styleOverrides: {
       root: {
-        color: colors.macaroniAndCheese,
+        color: colors.desertSand,
         fontSize: '12px',
         lineHeight: '16px',
         marginBottom: 1,

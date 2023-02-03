@@ -47,7 +47,7 @@ const typography: ThemeOptions['typography'] = {
   body2: {
     fontSize: '12px',
     lineHeight: '16px',
-    color: colors.antiqueWhite,
+    color: colors.aliceBlue,
     fontWeight: 400,
   },
 };

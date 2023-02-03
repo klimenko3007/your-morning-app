@@ -4,29 +4,35 @@ import { colors } from './colors';
 
 const palette: ThemeOptions['palette'] = {
   primary: {
-    main: colors.spaceCadet,
+    main: colors.windsor,
+    dark: colors.deepPurple,
+    light: colors.lightPurple,
     contrastText: colors.white,
   },
+
   secondary: {
-    main: colors.deepSaffron,
+    main: colors.persianPink,
+    contrastText: colors.aliceBlue,
+    light: colors.tapestry,
+    dark: colors.barosa,
   },
   background: {
-    default: colors.antiqueWhite,
-    paper: colors.white,
+    default: colors.white,
+    paper: colors.aliceBlue,
   },
   success: {
-    main: colors.celadon,
+    main: colors.morningGlory,
   },
   error: {
-    main: colors.cometRed,
+    main: colors.darkRed,
   },
   text: {
-    primary: colors.raisinBlack,
-    secondary: colors.richBlack,
-    disabled: colors.spaceCadet,
+    primary: colors.deepPurple,
+    secondary: colors.windsor,
+    disabled: colors.deepPurpleDisabled,
   },
   warning: {
-    main: colors.deepSaffron,
+    main: colors.sandyBrown,
   },
 };
 

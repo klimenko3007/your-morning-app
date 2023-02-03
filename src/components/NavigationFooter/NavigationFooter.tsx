@@ -9,8 +9,15 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import './NavigationFooter.css';
 import NavLinkStyled from '@/shared-styled-components/links';
 import { routes } from '@/routes/constants';
+import { useLocation } from 'react-router-dom';
 
 const NavigationFooter = () => {
+  const location = useLocation();
+
+  if (location.pathname === '/') {
+    return null;
+  }
+
   return (
     <>
       <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>

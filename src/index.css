@@ -6,17 +6,34 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   /* colors */
-  /* https://coolors.co/palette/a7d1a0-fcebdb-283963-2e3552-ffffff-2d3a64-2a468a-feb27e-839878-fa9746 */
-  --celadon: #a7d1a0ff;
-  --antique-white: #fcebdbff;
-  --space-cadet: #283963ff;
-  --space-cadet-2: #2e3552ff;
-  --white: #ffffffff;
-  --space-cadet-3: #2d3a64ff;
-  --dark-cornflower-blue: #2a468aff;
-  --macaroni-and-cheese: #feb27eff;
-  --artichoke: #839878ff;
-  --deep-saffron: #fa9746ff;
+
+  /* rgb(15,11,30) */
+  --black-purple: #0f0b1e;
+  /* rgb(30,23,62) */
+  --deep-purple: #1e173e;
+  --deep-purple-disabled: #6f6a84;
+  /* rgb(66,49,123) */
+  --windsor: #42317b;
+  /* rgb(62,117,230) */
+  --bright-blue: #3e75e6;
+  /* rgb(92,73,172) */
+  --light-purple: #5c49ac;
+  /* 	rgb(96,171,228) */
+  --malibu: #60abe4;
+  /* rgb(158,219,217) */
+  --morning-glory: #9edbd9;
+  /* rgb(244,169,92) */
+  --sandy-brown: #f4a95c;
+  /* 	rgb(240,195,167) */
+  --desert-sand: #f0c3a7;
+  /* rgb(229,242,248)  */
+  --alice-blue: #e5f2f8;
+  /* rgb(168,127,141) */
+  --tapestry: #a87f8d;
+  /* rgb(247, 136, 200) */
+  --persian-pink: #f788c8;
+  --barosa: #512d42;
+  --dark-red: #c73e1d;
 }
 * {
   margin: 0;
