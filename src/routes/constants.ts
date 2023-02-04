@@ -1,8 +1,8 @@
 export const routes = {
   home: '/',
-  health: '/health',
+  mood: '/mood',
   weather: '/weather',
-  travel: '/travel',
+  commute: '/commute',
   news: '/news',
   notFound: '*',
 };
