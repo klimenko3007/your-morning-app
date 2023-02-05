@@ -41,7 +41,7 @@ const MorningAppThemedComponents: ThemeOptions['components'] = {
   MuiToolbar: {
     styleOverrides: {
       root: {
-        justifyContent: 'space-around',
+        justifyContent: 'right',
       },
     },
   },

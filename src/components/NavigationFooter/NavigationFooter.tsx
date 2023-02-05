@@ -1,10 +1,5 @@
-import { IconButton } from '@mui/material';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import NavLinkStyled from '@/shared-styled-components/links';
-
-import { useLocation } from 'react-router-dom';
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { NavLink, useLocation } from 'react-router-dom';
 import { NavLinks } from './NavLinks';
 
 const NavigationFooter = () => {
@@ -16,17 +11,31 @@ const NavigationFooter = () => {
 
   return (
     <>
-      <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
-        <Toolbar>
-          {NavLinks().map(({ path, icon }, key) => (
-            <NavLinkStyled link={path} key={key}>
-              <IconButton color="inherit" size="large">
-                {icon}
-              </IconButton>
-            </NavLinkStyled>
-          ))}
-        </Toolbar>
-      </AppBar>
+      <BottomNavigation
+        showLabels
+        sx={(theme) => ({
+          background: theme.palette.primary.main,
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+        })}
+      >
+        {NavLinks().map(({ path, icon }, key) => (
+          <BottomNavigationAction
+            component={NavLink}
+            to={path}
+            icon={icon}
+            key={key}
+            sx={(theme) => ({
+              color: theme.palette.secondary.main,
+              '&.active': {
+                color: theme.palette.secondary.contrastText,
+              },
+            })}
+          />
+        ))}
+      </BottomNavigation>
     </>
   );
 };
