@@ -7,14 +7,21 @@ const Home = () => {
   return (
     <>
       <Navbar></Navbar>
+      <h1>Welcome, User!</h1>
       <Box
-        sx={{
+        sx={(theme) => ({
           display: 'flex',
           justifyContent: 'center',
+          flexDirection: 'column',
           alignItems: 'center',
           width: '100%',
-          height: 'calc(100vh - 56px)',
-        }}
+          maxWidth: '600px',
+          margin: '0 auto',
+          height: 'calc(100vh - 150px)',
+          [theme.breakpoints.up('md')]: {
+            height: 'calc(100vh - 200px)',
+          },
+        })}
       >
         <Box
           sx={{

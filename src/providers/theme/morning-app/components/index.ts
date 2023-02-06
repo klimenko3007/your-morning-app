@@ -29,9 +29,6 @@ const MorningAppThemedComponents: ThemeOptions['components'] = {
   MuiIconButton: {
     styleOverrides: {
       root: {
-        '&:focus': {
-          color: colors.aliceBlue,
-        },
         '&:hover': {
           backgroundColor: colors.deepPurple,
         },

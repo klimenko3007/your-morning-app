@@ -1,4 +1,3 @@
-import { routes } from '@/routes/constants';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
@@ -9,7 +8,6 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import Toolbar from '@mui/material/Toolbar';
 import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -34,7 +32,7 @@ const Navbar = () => {
       <AppBar position="sticky" color="primary" sx={{ top: 0, bottom: 'auto' }}>
         <Toolbar>
           <IconButton
-            color="inherit"
+            color="secondary"
             ref={anchorRef}
             id="trigger-button"
             onClick={handleToggle}
@@ -56,6 +54,10 @@ const Navbar = () => {
                   autoFocusItem={open}
                   id="profile-menu"
                   aria-labelledby="trigger-button"
+                  sx={(theme) => ({
+                    background: theme.palette.primary.light,
+                    color: theme.palette.primary.contrastText,
+                  })}
                 >
                   <MenuItem onClick={handleClose}>Profile</MenuItem>
                   <MenuItem onClick={handleClose}>My account</MenuItem>
