@@ -1,7 +1,7 @@
 import { ThemeOptions } from '@mui/material';
 import { tabClasses } from '@mui/material/Tab';
-
 import { colors } from '../colors';
+import type {} from '@mui/lab/themeAugmentation';
 
 const MorningAppThemedComponents: ThemeOptions['components'] = {
   MuiButtonBase: {
@@ -103,14 +103,14 @@ const MorningAppThemedComponents: ThemeOptions['components'] = {
       },
     },
   },
-  MuiBottomNavigationAction: {
-    styleOverrides: {
-      selected: ({ theme }) => ({
-        color: theme.palette.secondary.main,
-        fontWeight: 600,
-      }),
-    },
-  },
+  // MuiBottomNavigationAction: {
+  //   styleOverrides: {
+  //     selected: ({ theme }) => ({
+  //       color: theme.palette.secondary.main,
+  //       fontWeight: 600,
+  //     }),
+  //   },
+  // },
 };
 
 export default MorningAppThemedComponents;

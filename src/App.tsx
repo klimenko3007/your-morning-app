@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import NavigationFooter from './components/NavigationFooter';
 import AppRoutes from './routes';
+import NavigationFooter from './components/NavigationFooter';
 
 const App = () => {
   return (
