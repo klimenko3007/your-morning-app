@@ -1,3 +1,5 @@
+import Headlines from '@/pages/News/components/Headlines';
+import NewsList from '@/pages/News/components/NewsList';
 import { Route, Routes } from 'react-router-dom';
 import Health from '../pages/Health';
 import Home from '../pages/Home';
@@ -10,7 +12,11 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path={routes.home} element={<Home />}></Route>
-      <Route path={routes.news} element={<News />}></Route>
+      <Route path={routes.news} element={<News />}>
+        <Route index element={<Headlines />} />
+        <Route path="discover" element={<NewsList />} />
+        <Route path=":newsId" element={<News />} />
+      </Route>
       <Route path={routes.mood} element={<Health />}></Route>
       <Route path={routes.weather} element={<Weather />}></Route>
       <Route path={routes.commute} element={<Travel />}></Route>

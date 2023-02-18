@@ -7,6 +7,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+
+# Env files
+.env
+.env*.local
+.envrc
+
+.DS_Store
+
 node_modules
 dist
 dist-ssr

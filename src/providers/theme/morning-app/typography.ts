@@ -26,6 +26,7 @@ const typography: ThemeOptions['typography'] = {
   h5: {
     fontSize: '1rem',
     fontWeight: 600,
+    textTransform: 'unset',
   },
   h6: {
     fontsize: '1rem',
