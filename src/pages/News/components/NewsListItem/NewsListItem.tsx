@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CardActions from '@mui/material/CardActions';
 import { CardActionArea } from '@mui/material';
 
@@ -13,6 +13,12 @@ type NewsItemProps = {
 };
 
 const NewsListItem = ({ item }: NewsItemProps) => {
+  let navigate = useNavigate();
+
+  const onReadmoreClick = (id: string) => {
+    navigate(`../${encodeURIComponent(id)}`);
+  };
+
   return (
     <Card sx={{ marginBottom: '10px', background: 'none', boxShadow: 'none' }}>
       <Box>
@@ -49,9 +55,7 @@ const NewsListItem = ({ item }: NewsItemProps) => {
         <CardActions sx={{ justifyContent: 'end' }}>
           <Typography
             variant="overline"
-            component={Link}
-            to={item.webUrl}
-            sx={{ textDecoration: 'none' }}
+            onClick={() => onReadmoreClick(item.id)}
           >
             Read more
           </Typography>

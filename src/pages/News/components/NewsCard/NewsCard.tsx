@@ -16,7 +16,7 @@ const NewsCard = ({ item }: NewsCardProp) => (
       background: 'none',
     }}
     component={Link}
-    to={item.webUrl}
+    to={encodeURIComponent(item.id)}
   >
     <CardMedia component="img" height="150" image={item.fields.thumbnail} />
     <CardContent>

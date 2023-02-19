@@ -17,7 +17,10 @@ const NavigationFooter = () => {
           width: '100%',
           color: theme.palette.primary,
           height: '40px',
-          background: theme.palette.primary.main,
+          background:
+            location.pathname === '/news'
+              ? 'white'
+              : theme.palette.primary.main,
           position: 'fixed',
           bottom: 0,
           left: 0,
@@ -26,7 +29,9 @@ const NavigationFooter = () => {
       >
         <BottomNavigation
           sx={(theme) => ({
-            background: theme.palette.primary.main,
+            background: location.pathname.includes('/news')
+              ? 'black'
+              : theme.palette.primary.main,
             position: 'fixed',
             bottom: 0,
             left: 0,
