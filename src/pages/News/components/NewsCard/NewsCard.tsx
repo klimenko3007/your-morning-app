@@ -10,6 +10,7 @@ const NewsCard = ({ item }: NewsCardProp) => (
   <Card
     sx={{
       minWidth: '250px',
+      height: '280px',
       color: 'inherit',
       textDecoration: 'none',
       background: 'none',
@@ -17,7 +18,7 @@ const NewsCard = ({ item }: NewsCardProp) => (
     component={Link}
     to={item.webUrl}
   >
-    <CardMedia component="img" height="100" image={item.fields.thumbnail} />
+    <CardMedia component="img" height="150" image={item.fields.thumbnail} />
     <CardContent>
       <Typography gutterBottom variant="h5" component="div">
         {item.webTitle}
