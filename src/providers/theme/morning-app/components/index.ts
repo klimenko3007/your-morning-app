@@ -26,15 +26,15 @@ const MorningAppThemedComponents: ThemeOptions['components'] = {
       disabled: {},
     },
   },
-  MuiIconButton: {
-    styleOverrides: {
-      root: {
-        '&:hover': {
-          backgroundColor: colors.deepPurple,
-        },
-      },
-    },
-  },
+  // MuiIconButton: {
+  //   styleOverrides: {
+  //     root: {
+  //       '&:hover': {
+  //         backgroundColor: colors.deepPurple,
+  //       },
+  //     },
+  //   },
+  // },
   MuiToolbar: {
     styleOverrides: {
       root: {

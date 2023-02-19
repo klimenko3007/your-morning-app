@@ -24,7 +24,7 @@ const NewsList = () => {
   }, [data]);
 
   return (
-    <Box>
+    <Box sx={{ height: '100%', overflow: 'scroll' }}>
       {loading && <CircularProgress color="secondary" />}
       {error && <div>{error}</div>}
       {news.length > 0 &&
