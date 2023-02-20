@@ -85,8 +85,9 @@ const MorningAppThemedComponents: ThemeOptions['components'] = {
     },
     styleOverrides: {
       indicator: ({ theme }) => ({
-        backgroundColor: theme.palette.secondary.main,
-        height: '4px',
+        backgroundColor: theme.palette.primary.dark,
+        height: '3px',
+        width: '80px',
       }),
     },
   },
@@ -94,8 +95,12 @@ const MorningAppThemedComponents: ThemeOptions['components'] = {
     styleOverrides: {
       root: {
         textTransform: 'capitalize',
+        fontSize: '16px',
+        padding: '8px 0',
+        color: 'var(--deep-purple)',
         [`&.${tabClasses.selected}`]: {
           fontWeight: 600,
+          color: 'var(--deep-purple)',
         },
       },
     },
