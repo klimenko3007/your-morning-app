@@ -6,12 +6,21 @@ import useGetFetch from '@/hooks/useGetFetch';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 
 type NewsListProp = {
-  section: string;
+  section?: string;
+  query?: string;
 };
 
-const NewsList = ({ section }: NewsListProp) => {
+const constructUrl = (section?: string, query?: string) => {
   const NEWS_KEY = import.meta.env.VITE_NEWS_KEY;
-  const url = `https://content.guardianapis.com/search?section=${section}&show-fields=trailText,thumbnail&api-key=${NEWS_KEY}`;
+  let returnUrl = 'https://content.guardianapis.com/search?show-fields=all';
+  returnUrl += section ? `&section=${section}` : '';
+  returnUrl += query ? `&q=${query}` : '';
+  returnUrl += `&api-key=${NEWS_KEY}`;
+  return returnUrl;
+};
+
+const NewsList = ({ section, query }: NewsListProp) => {
+  const url = constructUrl(section, query);
   const { data, loading, error } = useGetFetch(url);
 
   const [news, setNews] = useState<NewsItem[] | []>([]);
@@ -26,6 +35,7 @@ const NewsList = ({ section }: NewsListProp) => {
     <Box
       sx={{
         height: '100%',
+        width: '100%',
         overflow: 'scroll',
         '::-webkit-scrollbar': { display: 'none' },
       }}

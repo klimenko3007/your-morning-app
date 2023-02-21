@@ -20,47 +20,55 @@ const NewsListItem = ({ item }: NewsItemProps) => {
   };
 
   return (
-    <Card sx={{ marginBottom: '10px', background: 'none', boxShadow: 'none' }}>
-      <Box>
-        <CardActionArea
-          sx={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}
+    <Card
+      sx={{
+        marginBottom: '10px',
+        background: 'none',
+        boxShadow: 'none',
+        width: '100%',
+      }}
+    >
+      <CardActionArea
+        sx={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'flex-start',
+          gap: '15px',
+          width: '100%',
+        }}
+      >
+        <CardMedia
+          component="img"
+          sx={{
+            width: 85,
+            height: 75,
+            objectFit: 'cover',
+            borderRadius: '8px',
+          }}
+          image={item.fields.thumbnail}
+          alt={item.webTitle}
+        ></CardMedia>
+        <CardContent
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '15px',
+            padding: 0,
+          }}
         >
-          <CardMedia
-            component="img"
-            sx={{
-              width: 85,
-              height: 75,
-              objectFit: 'cover',
-              borderRadius: '8px',
-            }}
-            image={item.fields.thumbnail}
-            alt={item.webTitle}
-          ></CardMedia>
-          <CardContent
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '15px',
-              padding: 0,
-            }}
-          >
-            <Typography component="div" variant="h5">
-              {item.webTitle}
-            </Typography>
-            <Typography variant="caption" component="div">
-              {item.fields.trailText}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions sx={{ justifyContent: 'end' }}>
-          <Typography
-            variant="overline"
-            onClick={() => onReadmoreClick(item.id)}
-          >
-            Read more
+          <Typography component="div" variant="h5">
+            {item.webTitle}
           </Typography>
-        </CardActions>
-      </Box>
+          <Typography variant="caption" component="div">
+            {item.fields.trailText}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions sx={{ justifyContent: 'end' }}>
+        <Typography variant="overline" onClick={() => onReadmoreClick(item.id)}>
+          Read more
+        </Typography>
+      </CardActions>
     </Card>
   );
 };
