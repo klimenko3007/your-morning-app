@@ -40,7 +40,6 @@ const SingleNews = () => {
     };
     if (modifiedData && modifiedItem) {
       setItem(modifiedItem);
-      console.log(modifiedItem);
     }
   }, [data]);
 

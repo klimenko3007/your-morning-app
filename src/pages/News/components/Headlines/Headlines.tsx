@@ -3,13 +3,26 @@ import Box from '@mui/system/Box';
 import { Link } from 'react-router-dom';
 import FrontPage from '../FrontPage';
 import NewsCarousel from '../NewsCarousel';
+import useGetFetch from '@/hooks/useGetFetch';
+import { useEffect, useState } from 'react';
+import { NewsItem } from '../../constants';
 
 const Headlines = () => {
-  const url = `https://content.guardianapis.com/search?section=world`;
+  const NEWS_KEY = import.meta.env.VITE_NEWS_KEY;
+  const url = `https://content.guardianapis.com/search?&show-fields=all&api-key=${NEWS_KEY}`;
+  const { data, loading, error } = useGetFetch(url);
+
+  const [news, setNews] = useState<NewsItem[] | []>([]);
+
+  useEffect(() => {
+    if (data?.response.results) {
+      setNews(data.response.results);
+    }
+  }, [data]);
 
   return (
     <>
-      <FrontPage />
+      <FrontPage item={news[0]} />
       <Box sx={{ padding: '16px', mb: '15px' }}>
         <Box
           sx={{
@@ -31,7 +44,7 @@ const Headlines = () => {
             More
           </Typography>
         </Box>
-        <NewsCarousel />
+        <NewsCarousel news={news} />
       </Box>
     </>
   );
