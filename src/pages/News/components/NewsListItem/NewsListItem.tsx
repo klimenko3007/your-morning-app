@@ -1,5 +1,4 @@
 import { NewsItem } from '../../constants';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -59,12 +58,14 @@ const NewsListItem = ({ item }: NewsItemProps) => {
           <Typography component="div" variant="h5">
             {item.webTitle}
           </Typography>
-          <Typography variant="caption" component="div">
-            {item.fields.trailText}
-          </Typography>
+          <Typography
+            dangerouslySetInnerHTML={{ __html: item.fields.trailText }}
+            variant="caption"
+            component="div"
+          ></Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions sx={{ justifyContent: 'end' }}>
+      <CardActions sx={{ justifyContent: 'end', cursor: 'pointer' }}>
         <Typography variant="overline" onClick={() => onReadmoreClick(item.id)}>
           Read more
         </Typography>

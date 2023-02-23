@@ -3,7 +3,7 @@ import { NewsItem } from '../../constants';
 import NewsListItem from '../NewsListItem';
 import { useEffect, useState } from 'react';
 import useGetFetch from '@/hooks/useGetFetch';
-import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
+import NewsListSceleton from './NewsListSceleton';
 
 type NewsListProp = {
   section?: string;
@@ -40,7 +40,7 @@ const NewsList = ({ section, query }: NewsListProp) => {
         '::-webkit-scrollbar': { display: 'none' },
       }}
     >
-      {loading && <CircularProgress color="secondary" />}
+      {loading && <NewsListSceleton />}
       {error && <div>{error}</div>}
       {news.length > 0 &&
         news.map((item: NewsItem) => (
