@@ -1,6 +1,6 @@
-import DiscoverNews from '@/pages/News/components/DiscoverNews';
-import Headlines from '@/pages/News/components/Headlines';
-import SingleNews from '@/pages/News/components/SingleNews';
+import DiscoverNews from '@/pages/News/subpages/DiscoverNews';
+import Headlines from '@/pages/News/subpages/Headlines';
+import SingleNews from '@/pages/News/subpages/SingleNews';
 import { Route, Routes } from 'react-router-dom';
 import Health from '../pages/Health';
 import Home from '../pages/Home';

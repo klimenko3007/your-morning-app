@@ -1,8 +1,8 @@
 import { Typography } from '@mui/material';
 import Box from '@mui/system/Box';
 import { Link } from 'react-router-dom';
-import FrontPage from '../FrontPage';
-import NewsCarousel from '../NewsCarousel';
+import FrontPage from '../../components/FrontPage';
+import NewsCarousel from '../../components/NewsCarousel';
 import useGetFetch from '@/hooks/useGetFetch';
 import { useEffect, useState } from 'react';
 import { NewsItem } from '../../constants';

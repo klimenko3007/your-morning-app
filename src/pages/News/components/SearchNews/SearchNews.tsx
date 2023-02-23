@@ -10,7 +10,7 @@ import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { NewsContext } from '@/providers/context/NewsContextProvider';
 import CloseIcon from '@mui/icons-material/Close';
 
-const AddSection = () => {
+const SearchNews = () => {
   const [search, setSearch] = useState<string>('');
   const [searchIsActive, setSearchIsActive] = useState(false);
   const { searchString, onStringAdded, onStringRemoved } =
@@ -69,4 +69,4 @@ const AddSection = () => {
   );
 };
 
-export default AddSection;
+export default SearchNews;
