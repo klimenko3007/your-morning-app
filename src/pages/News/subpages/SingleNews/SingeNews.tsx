@@ -1,60 +1,31 @@
-import useGetFetch from '@/hooks/useGetFetch';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import EastIcon from '@mui/icons-material/East';
 import './SingleNews.css';
 import SingleNewsSceleton from './SingleNewsSceleton';
-
-type ModiefiedItem = {
-  id: string;
-  body: string;
-  by: string;
-  thumbnail: string;
-  source: string;
-  title: string;
-  date: string;
-  trailText: string;
-};
+import { useSingleNewsQuery } from '@/hooks/useSingleNewsQuery';
 
 const SingleNews = () => {
   const { newsId } = useParams();
-  const url = `https://content.guardianapis.com/${newsId}?show-fields=all&api-key=${
-    import.meta.env.VITE_NEWS_KEY
-  }`;
-  const { loading, data, error } = useGetFetch(url);
 
-  const [item, setItem] = useState<ModiefiedItem | null>(null);
+  const { isLoading, singleNews, isError } = useSingleNewsQuery(newsId);
 
-  useEffect(() => {
-    const modifiedData = data?.response?.content;
-    const modifiedItem = {
-      id: modifiedData?.id,
-      body: modifiedData?.fields.body,
-      by: modifiedData?.fields.byline,
-      thumbnail: modifiedData?.fields.thumbnail,
-      source: modifiedData?.webUrl,
-      title: modifiedData?.webTitle,
-      date: modifiedData?.webPublicationDate,
-      trailText: modifiedData?.fields.trailText,
-    };
-    if (modifiedData && modifiedItem) {
-      setItem(modifiedItem);
-    }
-  }, [data]);
+  if (isError) {
+    return <div>Opps, something went wrong ...</div>;
+  }
 
   return (
     <>
-      {loading && <SingleNewsSceleton />}
+      {isLoading && <SingleNewsSceleton />}
 
-      {item && (
+      {singleNews && (
         <>
           <Box
             sx={{
               height: '45vh',
               width: '100%',
-              backgroundImage: `linear-gradient(0deg, rgba(168,168,168,0.15) 0%, rgba(189,189,189,0.15) 100%), url(${item.thumbnail})`,
+              backgroundImage: `url(${singleNews.thumbnail})`,
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover',
               borderBottomLeftRadius: '20px',
@@ -73,25 +44,25 @@ const SingleNews = () => {
                 gap: '8px',
                 color: 'white',
                 background:
-                  'linear-gradient(0deg, rgba(0,0,0,0.60) 0%, rgba(189,189,189,0.60) 100%)',
+                  'linear-gradient(0deg, rgba(85,85,85,0.90) 0%, rgba(0,0,0,0.40) 100%)',
                 padding: '16px',
               }}
             >
               <Typography variant="h2" component="div" color="unset">
-                {item.title}
+                {singleNews.title}
               </Typography>
-              <Typography variant="subtitle2">By {item.by}</Typography>
+              <Typography variant="subtitle2">By {singleNews.by}</Typography>
               <Typography
                 variant="caption"
                 component="div"
-                dangerouslySetInnerHTML={{ __html: item.trailText }}
+                dangerouslySetInnerHTML={{ __html: singleNews.trailText }}
               ></Typography>
             </Box>
             <Box sx={{ padding: '16px' }}>
               <Typography
                 variant="overline"
                 component={Link}
-                to={item.source}
+                to={singleNews.source}
                 sx={{
                   textDecoration: 'none',
                   color: 'white',
@@ -108,7 +79,7 @@ const SingleNews = () => {
           </Box>
           <Box
             component="div"
-            dangerouslySetInnerHTML={{ __html: item.body }}
+            dangerouslySetInnerHTML={{ __html: singleNews.body }}
             sx={{
               width: '100%',
               padding: '16px',

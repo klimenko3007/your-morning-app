@@ -4,7 +4,7 @@ import NewsList from '../NewsList';
 
 const NewsTabs = () => {
   const tabs = ['world', 'politics', 'business', 'media', 'sport', 'culture'];
-  const [section, setSection] = useState('politics');
+  const [section, setSection] = useState('world');
 
   const onTabChange = (event: React.SyntheticEvent, newValue: string) => {
     setSection(newValue);

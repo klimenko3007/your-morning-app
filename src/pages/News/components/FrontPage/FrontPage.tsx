@@ -34,7 +34,7 @@ const FrontPage = ({ item }: FrontPageProp) => {
             sx={{
               color: 'white',
               background:
-                'linear-gradient(0deg, rgba(168,168,168,0.30) 0%, rgba(189,189,189,0.30) 100%)',
+                'linear-gradient(0deg, rgba(85,85,85,0.90) 0%, rgba(0,0,0,0.40) 100%)',
               padding: '16px',
             }}
           >

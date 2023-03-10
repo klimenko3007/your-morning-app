@@ -15,3 +15,14 @@ export type NewsItem = {
     trailText: string;
   };
 };
+
+export type SingleNews = {
+  id: string;
+  body: string;
+  by: string;
+  thumbnail: string;
+  source: string;
+  title: string;
+  date: string;
+  trailText: string;
+};
