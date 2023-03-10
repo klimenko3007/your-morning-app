@@ -33,14 +33,16 @@ const Home = () => {
             gap: '20px',
           }}
         >
-          {Widgets().map(({ icon, path, header }, key) => (
+          {Widgets().map(({ icon, path, header, component }, key) => (
             <Widget
               header={header}
               icon={icon}
               path={path}
               key={key}
               index={key}
-            ></Widget>
+            >
+              {component()}
+            </Widget>
           ))}
         </Box>
       </Box>

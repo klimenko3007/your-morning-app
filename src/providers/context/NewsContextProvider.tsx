@@ -11,7 +11,6 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
   const [searchString, setSearchString] = useState('');
 
   const onStringAdded = (v: string) => {
-    console.log('Context', v);
     setSearchString(v);
   };
 

@@ -26,3 +26,10 @@ export type SingleNews = {
   date: string;
   trailText: string;
 };
+
+export enum WidgetTitles {
+  news = 'News',
+  games = 'Games',
+  commute = 'Commute',
+  weather = 'Weather',
+}
