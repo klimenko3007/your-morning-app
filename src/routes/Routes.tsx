@@ -2,7 +2,7 @@ import DiscoverNews from '@/pages/News/subpages/DiscoverNews';
 import Headlines from '@/pages/News/subpages/Headlines';
 import SingleNews from '@/pages/News/subpages/SingleNews';
 import { Route, Routes } from 'react-router-dom';
-import Health from '../pages/Health';
+import Games from '../pages/Games';
 import Home from '../pages/Home';
 import News from '../pages/News';
 import Travel from '../pages/Travel';
@@ -18,7 +18,7 @@ const AppRoutes = () => {
         <Route path="discover" element={<DiscoverNews />} />
         <Route path=":newsId" element={<SingleNews />} />
       </Route>
-      <Route path={routes.mood} element={<Health />}></Route>
+      <Route path={routes.mood} element={<Games />}></Route>
       <Route path={routes.weather} element={<Weather />}></Route>
       <Route path={routes.commute} element={<Travel />}></Route>
     </Routes>
