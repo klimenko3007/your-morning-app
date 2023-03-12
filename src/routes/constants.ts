@@ -1,6 +1,6 @@
 export const routes = {
   home: '/',
-  mood: '/mood',
+  games: '/games',
   weather: '/weather',
   commute: '/commute',
   news: '/news',

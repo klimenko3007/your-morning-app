@@ -24,7 +24,7 @@ export const Widgets = () => [
   },
 
   {
-    path: routes.mood,
+    path: routes.games,
     icon: <SportsEsportsIcon />,
     header: WidgetTitles.games,
     component: GamesWidget,
