@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
+import { useLongPress } from 'use-long-press';
 
 type Cell = {
   x: number;
@@ -46,7 +47,6 @@ const generateBombs = (numberOfBombs: number, boardSize: number) => {
       bombs.push(bomb);
     }
   }
-  console.log(bombs);
   return bombs;
 };
 
@@ -137,8 +137,13 @@ const revealEmptyCells = (board: Cell[][], cell: Cell) => {
 };
 
 const updateBoardOnClick = (board: Cell[][], cell: Cell) => {
+  if (cell.isFlagged) {
+    return [...board];
+  }
+
   board[cell.x][cell.y].isOpen = true;
   board[cell.x][cell.y].numberRevealed = true;
+
   if (cell.numberOfCloseBombs !== 0) {
     return [...board];
   }
@@ -149,25 +154,55 @@ const updateBoardOnClick = (board: Cell[][], cell: Cell) => {
 };
 
 const flagCell = (cell: Cell, board: Cell[][]) => {
-  board[cell.x][cell.y].isFlagged = true;
+  if (cell.isOpen) {
+    return;
+  }
+  board[cell.x][cell.y].isFlagged = !board[cell.x][cell.y].isFlagged;
   return [...board];
+};
+
+const revealBoard = (board: Cell[][]) => {
+  return board.map((row) =>
+    row.map((cell) => {
+      return { ...cell, isOpen: true };
+    })
+  );
 };
 
 const Games = () => {
   const [bombs, setBombs] = useState<number[][] | null>(null);
   const [board, setBoard] = useState<Cell[][] | null>(null);
   const [game, setGame] = useState<Game>({ gameOver: false, bombsLeft: 5 });
-
-  const onCellClicked = (cell: Cell) => {
-    console.log(cell);
-    if (cell.hasBomb) {
-      setGame({ ...game, gameOver: true });
-    }
-    setBoard(updateBoardOnClick(board ?? [], cell));
-  };
+  const [longPress, setLongPress] = useState<boolean>(false);
 
   const onCellPressed = (cell: Cell) => {
     flagCell(cell, board ?? []);
+  };
+
+  const delayedRemoveLongPress = () => {
+    setTimeout(() => setLongPress(false)), 400;
+  };
+
+  const onLongPress = useLongPress(
+    (event, meta) => {
+      setLongPress(true);
+      onCellPressed(meta.context as Cell);
+    },
+    {
+      onFinish: () => delayedRemoveLongPress(),
+    }
+  );
+
+  const onCellClicked = (cell: Cell) => {
+    if (longPress) {
+      return;
+    }
+    if (cell.hasBomb && !cell.isFlagged) {
+      setGame({ ...game, gameOver: true });
+      setBoard(revealBoard(board ?? []));
+      return;
+    }
+    setBoard(updateBoardOnClick(board ?? [], cell));
   };
 
   useEffect(() => {
@@ -179,31 +214,38 @@ const Games = () => {
       updateBoardWithnumberOfBombsPerCell(boardWithBombs);
     setBombs(bombs);
     setBoard(boardWithNumbers);
-    console.log(boardWithNumbers);
   }, []);
 
   return (
     <Box sx={{ display: 'flex', gap: '5px', flexDirection: 'column' }}>
-      {game.gameOver && <div>Game Over</div>}
       {board &&
         board.map((row, index) => (
           <Box key={index} sx={{ display: 'flex', width: '100%', gap: '5px' }}>
             {row.map((cell, column) => (
               <Box
+                {...onLongPress(cell)}
                 key={column}
                 onClick={() => onCellClicked(cell)}
                 sx={{
                   width: '50px',
                   height: '50px',
                   background: cell.isOpen ? 'yellow' : 'blue',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
               >
-                {cell.numberOfCloseBombs > 0 && cell.numberOfCloseBombs}
-                {hasBomb(bombs ?? [], [cell.x, cell.y]) && <span>💣</span>}
+                {cell.numberOfCloseBombs > 0 &&
+                  cell.isOpen &&
+                  !cell.hasBomb &&
+                  cell.numberOfCloseBombs}
+                {cell.hasBomb && cell.isOpen && <span>💣</span>}
+                {cell.isFlagged && <span>🚩</span>}
               </Box>
             ))}
           </Box>
         ))}
+      {game.gameOver && <div>Game Over</div>}
     </Box>
   );
 };

@@ -20,7 +20,8 @@
     "@vitejs/plugin-legacy": "^3.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.0"
+    "react-router-dom": "^6.8.0",
+    "use-long-press": "^2.0.3"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
