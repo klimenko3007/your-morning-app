@@ -1,3 +1,5 @@
+import ChooseGame from '@/pages/Games/ChooseGame';
+import Minesweeper from '@/pages/Games/Minesweeper';
 import DiscoverNews from '@/pages/News/subpages/DiscoverNews';
 import Headlines from '@/pages/News/subpages/Headlines';
 import SingleNews from '@/pages/News/subpages/SingleNews';
@@ -18,7 +20,10 @@ const AppRoutes = () => {
         <Route path="discover" element={<DiscoverNews />} />
         <Route path=":newsId" element={<SingleNews />} />
       </Route>
-      <Route path={routes.games} element={<Games />}></Route>
+      <Route path={routes.games} element={<Games />}>
+        <Route index element={<ChooseGame />}></Route>
+        <Route path="minesweeper" element={<Minesweeper />}></Route>
+      </Route>
       <Route path={routes.weather} element={<Weather />}></Route>
       <Route path={routes.commute} element={<Travel />}></Route>
     </Routes>
