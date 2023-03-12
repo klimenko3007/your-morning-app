@@ -11,6 +11,11 @@ type Cell = {
   numberOfCloseBombs: number;
 };
 
+type Game = {
+  bombsLeft: number;
+  gameOver: boolean;
+};
+
 const isCellDefined = (board: Cell[][], x: number, y: number) => {
   if (!board[x]) {
     return false;
@@ -25,15 +30,18 @@ const hasBomb = (bombs: number[][], coordinates: number[]) => {
   return v !== -1;
 };
 
-const generateRandomNumber = () => {
-  return Math.floor(Math.random() * 4);
+const generateRandomNumber = (limit: number) => {
+  return Math.floor(Math.random() * limit);
 };
 
-const generateBombs = (numberOfBombs: number) => {
+const generateBombs = (numberOfBombs: number, boardSize: number) => {
   const bombs: number[][] = [];
 
   while (bombs.length < numberOfBombs) {
-    const bomb = [generateRandomNumber(), generateRandomNumber()];
+    const bomb = [
+      generateRandomNumber(boardSize),
+      generateRandomNumber(boardSize),
+    ];
     if (!hasBomb(bombs, bomb)) {
       bombs.push(bomb);
     }
@@ -102,35 +110,70 @@ const updateBoardWithnumberOfBombsPerCell = (board: Cell[][]) => {
         (i) => i.hasBomb
       ).length;
 
-      return { ...cell, numberOfCloseBombs: bombs };
+      return {
+        ...cell,
+        numberOfCloseBombs: bombs,
+      };
     })
   );
 };
 
-const updateBoardOnClick = (board: Cell[][], cell: Cell) => {
-  board[cell.x][cell.y].isOpen = true;
+const revealEmptyCells = (board: Cell[][], cell: Cell) => {
   const adjacentCells = findAdjacentCells(board, cell);
-
-  adjacentCells.forEach((a) => {
-    if (a.numberOfCloseBombs === 0) {
-      board[a.x][a.y].isOpen = true;
+  adjacentCells.map((item) => {
+    if (
+      !item.isFlagged &&
+      !item.numberRevealed &&
+      (item.numberOfCloseBombs === 0 || !item.hasBomb)
+    ) {
+      board[item.x][item.y].isOpen = true;
+      board[item.x][item.y].numberRevealed = true;
+      if (item.numberOfCloseBombs === 0) {
+        revealEmptyCells(board, item);
+      }
     }
   });
+  return;
+};
 
+const updateBoardOnClick = (board: Cell[][], cell: Cell) => {
+  board[cell.x][cell.y].isOpen = true;
+  board[cell.x][cell.y].numberRevealed = true;
+  if (cell.numberOfCloseBombs !== 0) {
+    return [...board];
+  }
+
+  revealEmptyCells(board, cell);
+
+  return [...board];
+};
+
+const flagCell = (cell: Cell, board: Cell[][]) => {
+  board[cell.x][cell.y].isFlagged = true;
   return [...board];
 };
 
 const Games = () => {
   const [bombs, setBombs] = useState<number[][] | null>(null);
   const [board, setBoard] = useState<Cell[][] | null>(null);
+  const [game, setGame] = useState<Game>({ gameOver: false, bombsLeft: 5 });
 
   const onCellClicked = (cell: Cell) => {
+    console.log(cell);
+    if (cell.hasBomb) {
+      setGame({ ...game, gameOver: true });
+    }
     setBoard(updateBoardOnClick(board ?? [], cell));
   };
 
+  const onCellPressed = (cell: Cell) => {
+    flagCell(cell, board ?? []);
+  };
+
   useEffect(() => {
-    const board = generateBoard(5);
-    const bombs = generateBombs(5);
+    setGame({ gameOver: false, bombsLeft: 5 });
+    const board = generateBoard(10);
+    const bombs = generateBombs(20, 10);
     const boardWithBombs = placeBombsOnBoard(board, bombs);
     const boardWithNumbers =
       updateBoardWithnumberOfBombsPerCell(boardWithBombs);
@@ -141,6 +184,7 @@ const Games = () => {
 
   return (
     <Box sx={{ display: 'flex', gap: '5px', flexDirection: 'column' }}>
+      {game.gameOver && <div>Game Over</div>}
       {board &&
         board.map((row, index) => (
           <Box key={index} sx={{ display: 'flex', width: '100%', gap: '5px' }}>
@@ -154,7 +198,7 @@ const Games = () => {
                   background: cell.isOpen ? 'yellow' : 'blue',
                 }}
               >
-                {cell.numberOfCloseBombs}
+                {cell.numberOfCloseBombs > 0 && cell.numberOfCloseBombs}
                 {hasBomb(bombs ?? [], [cell.x, cell.y]) && <span>💣</span>}
               </Box>
             ))}
