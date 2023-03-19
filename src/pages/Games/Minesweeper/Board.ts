@@ -158,9 +158,17 @@ export class Board {
   public revealBoard() {
     this._board = this._board.map((row) =>
       row.map((cell) => {
-        return { ...cell, isOpen: !(cell.isFlagged && cell.hasBomb) };
+        return { ...cell, isOpen: true };
       })
     );
+  }
+
+  private cellIsMarkedOrOpen(cell: Cell) {
+    return cell.isOpen || (cell.isFlagged && cell.hasBomb);
+  }
+
+  public get boardIsOpen() {
+    return this._board.every((row) => row.every(this.cellIsMarkedOrOpen));
   }
 
   public initiateBoard(boardSize: number, bombsLimit: number) {

@@ -8,16 +8,28 @@ const gameBoard = new Board();
 
 const Miesweeper = () => {
   const [board, setBoard] = useState<BoardType | null>(null);
-  const [game, setGame] = useState<Game>({ gameOver: false, bombsLeft: 5 });
+  const [game, setGame] = useState<Game>({
+    gameOver: false,
+    bombsLeft: 5,
+    win: false,
+  });
   const [longPress, setLongPress] = useState<boolean>(false);
+
+  const numberOfBombs = 3;
+  const boardSize = 10;
 
   const onCellPressed = (cell: Cell) => {
     gameBoard.flagCell(cell);
     setBoard(gameBoard.board);
-    setGame({
-      ...game,
-      bombsLeft: cell.isFlagged ? game.bombsLeft - 1 : game.bombsLeft + 1,
-    });
+
+    if (gameBoard.boardIsOpen) {
+      setGame({ ...game, gameOver: true, win: true, bombsLeft: 0 });
+    } else {
+      setGame({
+        ...game,
+        bombsLeft: cell.isFlagged ? game.bombsLeft - 1 : game.bombsLeft + 1,
+      });
+    }
   };
 
   const delayedRemoveLongPress = () => {
@@ -49,12 +61,17 @@ const Miesweeper = () => {
     }
 
     gameBoard.updateBoardOnClick(cell);
+
     setBoard(gameBoard.board);
+
+    if (gameBoard.boardIsOpen) {
+      setGame({ ...game, gameOver: true, win: true });
+    }
   };
 
   useEffect(() => {
-    setGame({ gameOver: false, bombsLeft: 10 });
-    gameBoard.initiateBoard(10, 10);
+    setGame({ gameOver: false, bombsLeft: numberOfBombs, win: false });
+    gameBoard.initiateBoard(boardSize, numberOfBombs);
     setBoard(gameBoard.board);
   }, []);
 
@@ -71,7 +88,8 @@ const Miesweeper = () => {
       >
         <Box>
           {!game.gameOver && <div>Game: in progress</div>}
-          {game.gameOver && <div>Game: you lost!</div>}
+          {game.gameOver && !game.win && <div>Game: you lost!</div>}
+          {game.gameOver && game.win && <div>Game: you win!</div>}
         </Box>
         <Box>Bombs left: {game.bombsLeft}</Box>
       </Box>

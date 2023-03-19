@@ -11,6 +11,7 @@ export type Cell = {
 export type Game = {
   bombsLeft: number;
   gameOver: boolean;
+  win: boolean;
 };
 
 export type BoardType = Cell[][];
