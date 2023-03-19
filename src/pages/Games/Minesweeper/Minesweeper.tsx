@@ -137,32 +137,36 @@ const revealEmptyCells = (board: Cell[][], cell: Cell) => {
 };
 
 const updateBoardOnClick = (board: Cell[][], cell: Cell) => {
+  const boardCopy = [...board];
+
   if (cell.isFlagged) {
-    return [...board];
+    return boardCopy;
   }
 
-  board[cell.x][cell.y].isOpen = true;
-  board[cell.x][cell.y].numberRevealed = true;
+  boardCopy[cell.x][cell.y].isOpen = true;
+  boardCopy[cell.x][cell.y].numberRevealed = true;
 
   if (cell.numberOfCloseBombs !== 0) {
-    return [...board];
+    return boardCopy;
   }
 
-  revealEmptyCells(board, cell);
+  revealEmptyCells(boardCopy, cell);
 
-  return [...board];
+  return boardCopy;
 };
 
 const flagCell = (cell: Cell, board: Cell[][]) => {
+  const boardCopy = [...board];
   if (cell.isOpen) {
-    return;
+    return boardCopy;
   }
-  board[cell.x][cell.y].isFlagged = !board[cell.x][cell.y].isFlagged;
-  return [...board];
+  boardCopy[cell.x][cell.y].isFlagged = !boardCopy[cell.x][cell.y].isFlagged;
+
+  return boardCopy;
 };
 
 const revealBoard = (board: Cell[][]) => {
-  return board.map((row) =>
+  return [...board].map((row) =>
     row.map((cell) => {
       return { ...cell, isOpen: true };
     })
@@ -176,7 +180,11 @@ const Miesweeper = () => {
   const [longPress, setLongPress] = useState<boolean>(false);
 
   const onCellPressed = (cell: Cell) => {
-    flagCell(cell, board ?? []);
+    setBoard(flagCell(cell, board ?? []));
+    setGame({
+      ...game,
+      bombsLeft: cell.isFlagged ? game.bombsLeft - 1 : game.bombsLeft + 1,
+    });
   };
 
   const delayedRemoveLongPress = () => {
@@ -189,7 +197,9 @@ const Miesweeper = () => {
       onCellPressed(meta.context as Cell);
     },
     {
-      onFinish: () => delayedRemoveLongPress(),
+      onFinish: () => {
+        delayedRemoveLongPress();
+      },
     }
   );
 
@@ -206,7 +216,7 @@ const Miesweeper = () => {
   };
 
   useEffect(() => {
-    setGame({ gameOver: false, bombsLeft: 5 });
+    setGame({ gameOver: false, bombsLeft: 10 });
     const board = generateBoard(10);
     const bombs = generateBombs(20, 10);
     const boardWithBombs = placeBombsOnBoard(board, bombs);
@@ -217,36 +227,84 @@ const Miesweeper = () => {
   }, []);
 
   return (
-    <Box sx={{ display: 'flex', gap: '5px', flexDirection: 'column' }}>
-      {board &&
-        board.map((row, index) => (
-          <Box key={index} sx={{ display: 'flex', width: '100%', gap: '5px' }}>
-            {row.map((cell, column) => (
+    <>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          height: '40px',
+          padding: '16px',
+          width: '100%',
+        }}
+      >
+        <Box>
+          {!game.gameOver && <div>Game: in progress</div>}
+          {game.gameOver && <div>Game: you lost!</div>}
+        </Box>
+        <Box>Bombs left: {game.bombsLeft}</Box>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          width: '100%',
+          justifyContent: 'center',
+          alightItems: 'center',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '1px',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            width: '100%',
+          }}
+        >
+          {board &&
+            board.map((row, index) => (
               <Box
-                {...onLongPress(cell)}
-                key={column}
-                onClick={() => onCellClicked(cell)}
+                key={index}
                 sx={{
-                  width: '50px',
-                  height: '50px',
-                  background: cell.isOpen ? 'yellow' : 'blue',
                   display: 'flex',
-                  justifyContent: 'center',
+                  width: '100%',
+                  gap: '1px',
                   alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
-                {cell.numberOfCloseBombs > 0 &&
-                  cell.isOpen &&
-                  !cell.hasBomb &&
-                  cell.numberOfCloseBombs}
-                {cell.hasBomb && cell.isOpen && <span>💣</span>}
-                {cell.isFlagged && <span>🚩</span>}
+                {row.map((cell, column) => (
+                  <Box
+                    {...onLongPress(cell)}
+                    key={column}
+                    onClick={() => onCellClicked(cell)}
+                    sx={{
+                      width: '50px',
+                      height: '50px',
+                      background: cell.isOpen
+                        ? 'var(--persian-pink)'
+                        : 'var(--light-purple)',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      border: cell.isOpen
+                        ? '5px  var(--persian-pink)'
+                        : '5px outset var(--light-purple)',
+                      padding: '2px',
+                    }}
+                  >
+                    {cell.numberOfCloseBombs > 0 &&
+                      cell.isOpen &&
+                      !cell.hasBomb &&
+                      cell.numberOfCloseBombs}
+                    {cell.hasBomb && cell.isOpen && <span>💣</span>}
+                    {cell.isFlagged && <span>🚩</span>}
+                  </Box>
+                ))}
               </Box>
             ))}
-          </Box>
-        ))}
-      {game.gameOver && <div>Game Over</div>}
-    </Box>
+        </Box>
+      </Box>
+    </>
   );
 };
 
