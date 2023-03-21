@@ -5,15 +5,15 @@ import { Box, Button, Typography } from '@mui/material';
 
 const ChooseGame = () => {
   return (
-    <Box>
+    <Box sx={{ p: '0 16px', mt: '16px' }}>
       <h1>Choose your game</h1>
 
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <Box sx={{ display: 'flex', alignItems: 'start', gap: '20px' }}>
           <Box
             component={'img'}
             src="src/assets/minesweeper.png"
-            sx={{ width: 100 }}
+            sx={{ width: '60px' }}
           ></Box>
           <Box>
             <Typography variant="h2">Minesweeper</Typography>

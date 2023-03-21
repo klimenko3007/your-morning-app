@@ -1,10 +1,9 @@
 import Box from '@mui/material/Box';
-import { useEffect, useState } from 'react';
-import { useLongPress } from 'use-long-press';
+import { useEffect, useRef, useState } from 'react';
 import { Board } from './Board';
+import BoardCell from './components/BoardCell';
+import GameStatus from './components/GameStatus';
 import { Cell, Game, BoardType } from './consts';
-
-const gameBoard = new Board();
 
 const Miesweeper = () => {
   const [board, setBoard] = useState<BoardType | null>(null);
@@ -14,15 +13,18 @@ const Miesweeper = () => {
     win: false,
   });
   const [longPress, setLongPress] = useState<boolean>(false);
-
-  const numberOfBombs = 3;
+  const gameBoard = useRef(new Board());
+  const numberOfBombs = 10;
   const boardSize = 10;
 
   const onCellPressed = (cell: Cell) => {
-    gameBoard.flagCell(cell);
-    setBoard(gameBoard.board);
+    if (game.bombsLeft === 0) {
+      return;
+    }
+    gameBoard.current.flagCell(cell);
+    setBoard(gameBoard.current.board);
 
-    if (gameBoard.boardIsOpen) {
+    if (gameBoard.current.boardIsOpen) {
       setGame({ ...game, gameOver: true, win: true, bombsLeft: 0 });
     } else {
       setGame({
@@ -32,22 +34,6 @@ const Miesweeper = () => {
     }
   };
 
-  const delayedRemoveLongPress = () => {
-    setTimeout(() => setLongPress(false)), 400;
-  };
-
-  const onLongPress = useLongPress(
-    (event, meta) => {
-      setLongPress(true);
-      onCellPressed(meta.context as Cell);
-    },
-    {
-      onFinish: () => {
-        delayedRemoveLongPress();
-      },
-    }
-  );
-
   const onCellClicked = (cell: Cell) => {
     if (longPress) {
       return;
@@ -55,44 +41,29 @@ const Miesweeper = () => {
 
     if (cell.hasBomb && !cell.isFlagged) {
       setGame({ ...game, gameOver: true });
-      gameBoard.revealBoard();
-      setBoard(gameBoard.board);
+      gameBoard.current.revealBoard();
+      setBoard(gameBoard.current.board);
       return;
     }
 
-    gameBoard.updateBoardOnClick(cell);
+    gameBoard.current.updateBoardOnClick(cell);
 
-    setBoard(gameBoard.board);
+    setBoard(gameBoard.current.board);
 
-    if (gameBoard.boardIsOpen) {
+    if (gameBoard.current.boardIsOpen) {
       setGame({ ...game, gameOver: true, win: true });
     }
   };
 
   useEffect(() => {
     setGame({ gameOver: false, bombsLeft: numberOfBombs, win: false });
-    gameBoard.initiateBoard(boardSize, numberOfBombs);
-    setBoard(gameBoard.board);
+    gameBoard.current.initiateBoard(boardSize, numberOfBombs);
+    setBoard(gameBoard.current.board);
   }, []);
 
   return (
     <>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          height: '40px',
-          padding: '16px',
-          width: '100%',
-        }}
-      >
-        <Box>
-          {!game.gameOver && <div>Game: in progress</div>}
-          {game.gameOver && !game.win && <div>Game: you lost!</div>}
-          {game.gameOver && game.win && <div>Game: you win!</div>}
-        </Box>
-        <Box>Bombs left: {game.bombsLeft}</Box>
-      </Box>
+      <GameStatus game={game} />
       <Box
         sx={{
           display: 'flex',
@@ -106,8 +77,7 @@ const Miesweeper = () => {
             display: 'flex',
             gap: '1px',
             flexDirection: 'column',
-            justifyContent: 'center',
-            width: '100%',
+            background: 'var(--windsor)',
           }}
         >
           {board &&
@@ -120,35 +90,17 @@ const Miesweeper = () => {
                   gap: '1px',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  background: 'var(--windsor)',
                 }}
               >
                 {row.map((cell, column) => (
-                  <Box
-                    {...onLongPress(cell)}
+                  <BoardCell
                     key={column}
-                    onClick={() => onCellClicked(cell)}
-                    sx={{
-                      width: '50px',
-                      height: '50px',
-                      background: cell.isOpen
-                        ? 'var(--persian-pink)'
-                        : 'var(--light-purple)',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      border: cell.isOpen
-                        ? '5px  var(--persian-pink)'
-                        : '5px outset var(--light-purple)',
-                      padding: '2px',
-                    }}
-                  >
-                    {cell.numberOfCloseBombs > 0 &&
-                      cell.isOpen &&
-                      !cell.hasBomb &&
-                      cell.numberOfCloseBombs}
-                    {cell.hasBomb && cell.isOpen && <span>💣</span>}
-                    {cell.isFlagged && <span>🚩</span>}
-                  </Box>
+                    setLongPress={setLongPress}
+                    onCellClicked={onCellClicked}
+                    cell={cell}
+                    onCellPressed={onCellPressed}
+                  />
                 ))}
               </Box>
             ))}
