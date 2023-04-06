@@ -1,11 +1,11 @@
 import { Button } from '@mui/material';
-import { PropsWithoutRef } from 'react';
 
 type RestartGameProps = {
-  handleClick: () => void;
+  handleClick: (numberOfBombs: number) => void;
+  bombs: number;
 };
 
-const RestartGame = ({ handleClick }: RestartGameProps) => {
+const RestartGame = ({ handleClick, bombs }: RestartGameProps) => {
   return (
     <Button
       variant="contained"
@@ -18,7 +18,7 @@ const RestartGame = ({ handleClick }: RestartGameProps) => {
           maxWidth: '200px',
         },
       })}
-      onClick={handleClick}
+      onClick={() => handleClick(bombs)}
     >
       Restart game
     </Button>

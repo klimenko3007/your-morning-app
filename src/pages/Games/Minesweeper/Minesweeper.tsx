@@ -5,8 +5,10 @@ import BoardCell from './components/BoardCell';
 import GameStatus from './components/GameStatus';
 import RestartGame from './components/RestartGame';
 import { Cell, Game, BoardType } from './consts';
+import { useSearchParams } from 'react-router-dom';
 
 const Miesweeper = () => {
+  const [searchParams] = useSearchParams();
   const [board, setBoard] = useState<BoardType | null>(null);
   const [game, setGame] = useState<Game>({
     gameOver: false,
@@ -16,7 +18,6 @@ const Miesweeper = () => {
   const [longPress, setLongPress] = useState<boolean>(false);
   const [timer, setTimer] = useState(0);
   const gameBoard = useRef(new Board());
-  const numberOfBombs = 10;
   const boardSize = 10;
 
   const onCellPressed = (cell: Cell) => {
@@ -57,7 +58,7 @@ const Miesweeper = () => {
     }
   };
 
-  const startGame = () => {
+  const startGame = (numberOfBombs: number) => {
     setGame({
       gameOver: false,
       bombsLeft: numberOfBombs,
@@ -68,7 +69,7 @@ const Miesweeper = () => {
   };
 
   useEffect(() => {
-    startGame();
+    startGame(Number(searchParams.get('level')));
   }, []);
 
   useEffect(() => {
@@ -132,7 +133,10 @@ const Miesweeper = () => {
             ))}
         </Box>
       </Box>
-      <RestartGame handleClick={startGame} />
+      <RestartGame
+        handleClick={startGame}
+        bombs={Number(searchParams.get('level'))}
+      />
     </Box>
   );
 };
