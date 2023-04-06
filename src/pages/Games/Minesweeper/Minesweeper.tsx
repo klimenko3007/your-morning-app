@@ -83,7 +83,7 @@ const Miesweeper = () => {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [game]);
+  }, [game.gameOver, game.win]);
 
   return (
     <Box
