@@ -58,9 +58,9 @@ const BoardCell = ({
     <Box
       {...onLongPress(cell)}
       onClick={() => onCellClicked(cell)}
-      sx={{
-        width: '30px',
-        height: '30px',
+      sx={(theme) => ({
+        width: '33px',
+        height: '33px',
         background: cell.isOpen ? 'var(--persian-pink)' : 'var(--light-purple)',
         display: 'flex',
         justifyContent: 'center',
@@ -69,8 +69,19 @@ const BoardCell = ({
           ? '5px  var(--persian-pink)'
           : '5px outset var(--light-purple)',
         padding: '2px',
-        color: cell.isOpen ? 'var(--windsor)' : 'var(--alice-blue)',
-      }}
+        color: cell.isOpen ? 'var(--deep-purple)' : 'var(--alice-blue)',
+        userSelect: 'none',
+        WebkitUserSelect: 'none',
+        msUserSelect: 'none',
+        [theme.breakpoints.up('sm')]: {
+          width: '50px',
+          height: '50px',
+        },
+        [theme.breakpoints.up('md')]: {
+          width: '60px',
+          height: '60px',
+        },
+      })}
     >
       {shouldShowNumber() && !shouldShowCross() && (
         <Typography variant="h5">{cell.numberOfCloseBombs}</Typography>
@@ -79,11 +90,48 @@ const BoardCell = ({
         <Box
           component="img"
           src={mine}
-          sx={{ width: '25px', height: '25px' }}
+          sx={(theme) => ({
+            width: '25px',
+            height: '25px',
+            [theme.breakpoints.up('sm')]: {
+              width: '30px',
+              height: '30px',
+            },
+            [theme.breakpoints.up('md')]: {
+              width: '40px',
+              height: '40px',
+            },
+          })}
         ></Box>
       )}
-      {shouldShowFlag() && <TourIcon />}
-      {shouldShowCross() && <ClearIcon />}
+      {shouldShowFlag() && (
+        <TourIcon
+          color={cell.isOpen ? 'success' : 'inherit'}
+          sx={(theme) => ({
+            fontSize: '20px',
+            [theme.breakpoints.up('sm')]: {
+              fontSize: '35px',
+            },
+            [theme.breakpoints.up('md')]: {
+              fontSize: '45px',
+            },
+          })}
+        />
+      )}
+      {shouldShowCross() && (
+        <ClearIcon
+          color="error"
+          sx={(theme) => ({
+            fontSize: '20px',
+            [theme.breakpoints.up('sm')]: {
+              fontSize: '35px',
+            },
+            [theme.breakpoints.up('md')]: {
+              fontSize: '45px',
+            },
+          })}
+        />
+      )}
     </Box>
   );
 };

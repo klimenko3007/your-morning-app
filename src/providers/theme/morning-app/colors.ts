@@ -6,7 +6,7 @@ export const colors = {
   brightBlue: '#3e75e6',
   lightPurple: '#5c49ac',
   malibu: '#60abe4',
-  morningGlory: '#9edbd9',
+  morningGlory: '#99EDC3',
   sandyBrown: '#f4a95c',
   desertSand: '#f0c3a7',
   aliceBlue: '#e5f2f8',

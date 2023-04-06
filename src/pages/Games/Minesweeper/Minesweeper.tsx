@@ -18,7 +18,7 @@ const Miesweeper = () => {
   const boardSize = 10;
 
   const onCellPressed = (cell: Cell) => {
-    if (game.bombsLeft === 0) {
+    if (game.bombsLeft === 0 || cell.isOpen) {
       return;
     }
     gameBoard.current.flagCell(cell);
@@ -70,6 +70,7 @@ const Miesweeper = () => {
           width: '100%',
           justifyContent: 'center',
           alightItems: 'center',
+          padding: '16px',
         }}
       >
         <Box
@@ -78,6 +79,7 @@ const Miesweeper = () => {
             gap: '1px',
             flexDirection: 'column',
             background: 'var(--windsor)',
+            border: '1px solid var(--light-purple)',
           }}
         >
           {board &&
