@@ -62,6 +62,7 @@ const BoardCell = ({
         width: '33px',
         height: '33px',
         background: cell.isOpen ? 'var(--persian-pink)' : 'var(--light-purple)',
+        transition: 'background .3s ease-in',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -91,15 +92,15 @@ const BoardCell = ({
           component="img"
           src={mine}
           sx={(theme) => ({
-            width: '25px',
-            height: '25px',
+            width: '30px',
+            height: '30px',
             [theme.breakpoints.up('sm')]: {
-              width: '30px',
-              height: '30px',
+              width: '35px',
+              height: '35px',
             },
             [theme.breakpoints.up('md')]: {
-              width: '40px',
-              height: '40px',
+              width: '45px',
+              height: '45px',
             },
           })}
         ></Box>

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Board } from './Board';
 import BoardCell from './components/BoardCell';
 import GameStatus from './components/GameStatus';
+import RestartGame from './components/RestartGame';
 import { Cell, Game, BoardType } from './consts';
 
 const Miesweeper = () => {
@@ -13,6 +14,7 @@ const Miesweeper = () => {
     win: false,
   });
   const [longPress, setLongPress] = useState<boolean>(false);
+  const [timer, setTimer] = useState(0);
   const gameBoard = useRef(new Board());
   const numberOfBombs = 10;
   const boardSize = 10;
@@ -55,22 +57,44 @@ const Miesweeper = () => {
     }
   };
 
-  useEffect(() => {
-    setGame({ gameOver: false, bombsLeft: numberOfBombs, win: false });
+  const startGame = () => {
+    setGame({
+      gameOver: false,
+      bombsLeft: numberOfBombs,
+      win: false,
+    });
     gameBoard.current.initiateBoard(boardSize, numberOfBombs);
     setBoard(gameBoard.current.board);
+  };
+
+  useEffect(() => {
+    startGame();
   }, []);
 
+  useEffect(() => {
+    let count = 0;
+    const interval = setInterval(() => {
+      count = count + 1;
+      setTimer(count);
+    }, 1000);
+
+    if (game.gameOver || game.win) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [game]);
+
   return (
-    <>
-      <GameStatus game={game} />
+    <Box
+      sx={{ padding: '30px 16px', display: 'flex', flexDirection: 'column' }}
+    >
+      <GameStatus game={game} timer={timer} />
       <Box
         sx={{
           display: 'flex',
           width: '100%',
           justifyContent: 'center',
           alightItems: 'center',
-          padding: '16px',
         }}
       >
         <Box
@@ -108,7 +132,8 @@ const Miesweeper = () => {
             ))}
         </Box>
       </Box>
-    </>
+      <RestartGame handleClick={startGame} />
+    </Box>
   );
 };
 
